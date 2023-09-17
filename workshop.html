@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>GMDS RShiny Workshop by BMS</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Karma Tarap" />
+    <meta name="date" content="2023-09-17" />
+    <script src="workshop_files/header-attrs-2.24/header-attrs.js"></script>
+    <link href="workshop_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="workshop_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# GMDS RShiny Workshop by BMS
+]
+.subtitle[
+## Building Interactive Web Apps with Shiny
+]
+.author[
+### Karma Tarap
+]
+.institute[
+### Bristol Myers Squibb
+]
+.date[
+### 2023-09-17
+]
+
+---
+
+
+
+
+# Welcome to the GMDS RShiny Workshop by BMS!
+
+
+## About the Instructor
+
+- **Instructor**: Karma Tarap
+- Statistical Programmer / Data Scientist with over 16 years in the Pharmaceutical Industry. 
+
+## Course Overview
+
+- Welcome to the Shiny Workshop: Building Interactive Web Apps!
+- In this workshop, we will dive into the exciting world of building interactive web applications using Shiny.
+---
+## Workshop Agenda
+
+- **Agenda**:
+  - Introduction and Setting Up Shiny App (15 mins)
+  - User Interface and File Input (20 mins)
+  - Data Reading &amp; Reactive Programming (25 mins)
+  - Data Manipulation with dplyr (25 mins)
+  - Dynamic UI and Drop-downs (20 mins)
+  - Data Visualization with ggplot2 (20 mins)
+  - Interactive Plots with Plotly (20 mins)
+  - Labs Plot (30 mins)
+  - **Break** (5 mins) - Each hour
+  - Conclusion and Resources (10 mins)
+  - Q&amp;A and Buffer Time (30 mins)
+
+## Course Structure
+
+- The workshop is structured around eight hands-on exercises, each building upon the previous one.
+- We'll take a short 5-minute break every hour to recharge.
+
+---
+
+## Why RShiny?
+
+### Introduction
+RShiny is a powerful framework for building web applications using R. In this section, we will explore why RShiny has become an essential tool for data scientists and analysts.
+
+### Features
+- **Reactivity**: Allows your data visualizations to change in real-time.
+- **Customizability**: Provides a variety of themes and widgets to make your app unique.
+- **Ease of Use**: Requires just a basic understanding of R to get started.
+---
+### Advantages Over Other Tools
+- **Integration with R**: Seamless compatibility with various R packages.
+- **No need for web development skills**: You can create sophisticated web apps without knowing HTML, CSS, or JavaScript (although these can be added for more customization).
+---
+
+#### Exercise 1: Setting Up Your Shiny App
+
+
+
+- **What You Will Learn**
+  - How to create the basic structure of a Shiny app
+  - Familiarize yourself with Shiny UI and server components
+
+---
+
+- **In the User Interface (UI) Section**
+  - Define the UI for your app in the `ui.R` file, or simply a ui and server function.
+  - Use `fluidPage`, `navbarPage`, or your preferred layout structure.
+  
+  - Example UI Code:
+  
+```R
+    library(shiny)
+
+    ui &lt;- fluidPage(
+      titlePanel("My Shiny App"),
+      sidebarLayout(
+        sidebarPanel(
+          # Add UI elements here
+        ),
+        mainPanel(
+          # Add UI elements here
+        )
+      )
+    )
+```
+
+---
+
+- **In the Server Logic Section**
+  - Define the server logic for your app in the `server.R`  file or server function.
+  - This can be left empty for now.
+  
+  - Example Server Code:
+  
+```R
+    library(shiny)
+
+    server &lt;- function(input, output) {
+      # Define server logic here
+    }
+    ```
+
+---
+
+- **Running Your App**
+  - Run your application using `shinyApp(ui, server)` or pressing the run app button on RStudio.
+  
+  - Example:
+```R
+    shinyApp(ui, server)
+    ```
+
+---
+
+- **Observing the Result**
+  - A new window or tab should open, displaying your Shiny app with the default layout.
+  - Note the basic structure of the app with UI elements and an empty server.
+
+---
+
+- **Points to Consider**
+  - Take some time to explore the basic structure of a Shiny app.
+  - Familiarize yourself with the `ui.R` and `server.R` files (or functions).
+  - In the following exercises, we'll build upon this foundation to create interactive and data-driven apps.
+
+---
+
+- **Hints**
+  - Remember, every Shiny app has a user interface (UI) and a server (server logic).
+  - You can customize the appearance of your app in `ui.R` and define its behavior in `server.R`.
+
+---
+
+
+  
+### Introduction to navbarPage
+
+The `navbarPage` function in Shiny allows you to create a navigation bar at the top of your app, giving you the capability to organize various parts of your app into separate tabs. It serves as the main UI container for your Shiny application.
+
+
+```R
+ui &lt;- navbarPage(
+  "App Title",  # The title of your app, displayed on the navbar
+  tabPanel("Tab 1"),  # The first tab
+  tabPanel("Tab 2")   # The second tab
+)
+```
+
+
+#### Exercise 2: User Interface and File Input
+
+
+
+- **What You Will Learn**
+  - How to create the user interface (UI) for your Shiny app
+  - Adding file input functionality to your app
+  
+---
+
+- **Required Packages**
+  - Load the necessary packages:
+    - `shiny`
+    - `bslib`
+
+---
+
+- **UI Layout**
+  - Enhance the UI layout of your app using `fluidPage`.
+  - Achieve a responsive layout with `fluidPage`.
+
+```R
+ui &lt;- fluidPage(...)
+```
+
+---
+
+- **Styling with bslib**
+  - Improve the appearance of your app using Bootstrap themes with `bslib`.
+
+```R
+theme = bs_theme(version = 5, bootswatch = "cerulean")
+```
+
+---
+
+- **Text Formatting with HTML Tags**
+  - Use HTML tags like `h1`, `hr`, and `p` for text formatting.
+
+```R
+h1("Welcome to the Shiny Workshop!")
+hr()
+p("In this exercise, you have added File Input for Demographics.")
+```
+
+-  Type `names(tags)` to see a list of supported HTML tags
+-  Why not try a few out!
+
+---
+
+- **File Input: `fileInput`**
+  - Allow users to upload files directly into the application with `fileInput`.
+
+```R
+fileInput('dmFile', 'Choose Demographics File', accept = c('.xpt'))
+```
+
+![Other basic widgets](./images/basic-widgets.png)
+
+---
+
+- **Summary**
+  - This exercise covers:
+    - Creating a responsive UI layout with `fluidPage`.
+    - Enhancing the appearance with Bootstrap themes (`bslib`).
+    - Using HTML tags for text formatting.
+    - Adding file input functionality to your app.
+
+---
+
+- **Exercise Task**
+  - Your task is to create the UI for your Shiny app with the described elements.
+  
+---
+
+- **Summary and Next Steps**
+  - You've learned how to create the user interface and add file input functionality to your Shiny app.
+  - Prepare for the next concept: "Data Reading &amp; Reactive Programming."
+
+---
+
+#### Exercise 3: Data Reading &amp; Reactive Programming
+
+
+
+- **What You Will Learn**
+  - How to implement reactive programming in your Shiny app
+  - Reading data reactively and displaying it in the UI
+  
+---
+
+- **Required Packages**
+  - Load the necessary packages:
+    - `shiny`
+    - `bslib`
+    - `dplyr`
+    - `haven`
+
+---
+
+- **Deep Dive into Reactive Programming**
+  - Shiny uses reactive values and reactive functions for dynamic behavior.
+  - `reactive({})` contains code that runs in response to some reactive value.
+
+---
+
+- **The `req` Function**
+  - `req()` checks if an input exists before proceeding.
+  - It helps prevent errors during data reading.
+
+---
+
+- **Server Logic Enhancements**
+  - Reactive data reading using `haven::read_xpt`.
+  - Use `renderTable` to display the first 6 rows of the data.
+  - Example server logic:
+```R
+    dm_data &lt;- reactive({
+      req(input$dmFile)
+      haven::read_xpt(input$dmFile$datapath)
+    })
+    ```
+
+---
+
+- **UI Enhancements**
+  - Use `tableOutput` to display the first 6 rows of the uploaded data.
+
+---
+
+- **Exercise Task**
+  - Implement reactive data reading using `haven::read_xpt`.
+  - Display the first 6 rows of uploaded data in the UI using `tableOutput()`.
+
+---
+
+- **Summary and Next Steps**
+  - You've learned reactive programming and reactive data reading in Shiny.
+  - Prepare for the next concept: "Data Manipulation with dplyr."
+
+---
+
+#### Exercise 4: Data Manipulation &amp; Advanced Reactive Programming
+
+
+
+- **What You Will Learn**
+  - How to use `dplyr` for data manipulation in a Shiny app
+  - Advanced concepts of reactive programming
+
+---
+
+- **Required Packages**
+  - Load the necessary packages:
+    - `shiny`
+    - `bslib`
+    - `dplyr`
+    - `haven`
+
+---
+
+- **Deep Dive into Reactive Programming**
+  - Understand that Shiny's reactive programming model enables dynamic behavior in your apps.
+
+---
+
+- **Data Manipulation using `dplyr`**
+  - Utilize the power of the `dplyr` library for data manipulation.
+  - Explore functions like `group_by()` and `summarise()` for data summarization.
+
+---
+
+- **Server Logic for Data Manipulation**
+  - Define the server logic for data manipulation in your Shiny app.
+  - Reactive data reading using `haven::read_xpt`.
+  - Example of server logic:
+
+```R
+server &lt;- function(input, output, session) {
+  dm_data &lt;- reactive({
+    req(input$dmFile)
+    read_xpt(input$dmFile$datapath)
+  })
+  
+  mean_age_data &lt;- reactive({
+    dm_data() %&gt;%
+      group_by(ACTARM) %&gt;%
+      summarise(mean_age = mean(AGE))
+  })
+  
+  output$dmTable &lt;- renderTable({
+    head(mean_age_data())
+  })
+}
+```
+
+---
+
+- **Exercise Task**
+  - Your task is to implement data manipulation using `dplyr` in your Shiny app.
+  - Display the manipulated data in the UI using `tableOutput()`.
+
+---
+
+- **Summary and Next Steps**
+  - Exercise 4 has enhanced your Shiny skills by introducing data manipulation with `dplyr`.
+  - Get ready for the next concept: "Dynamic UI Elements."
+
+
+---
+
+#### Exercise 5: Creating Dynamic UI Elements
+
+---
+
+- **What You Will Learn**
+  - How to create dynamic UI elements in Shiny
+  
+---
+
+- **Required Packages**
+  - Load the necessary packages:
+    - `shiny`
+    - `bslib`
+    - `dplyr`
+    - `haven`
+
+---
+
+- **Creating Dynamic UI Elements**
+  - Define the UI layout using `fluidPage`.
+  - Apply Bootstrap themes for improved appearance.
+
+---
+
+- **Generating Dynamic Choices**
+  - Generate the list of available groups dynamically using `observe` and `updateSelectInput`.
+  
+---
+
+- **Rendering Dynamic Data**
+  - Render the table for the uploaded data dynamically using `tableOutput`.
+
+---
+
+- **Exercise Task**
+  - Implement dynamic UI elements, choices, and data rendering.
+
+---
+
+- **Summary and Next Steps**
+  - You've learned how to create dynamic UI elements in Shiny.
+  - Prepare for the next concept: "Data Visualization with ggplot2."
+
+---
+
+#### Exercise 6: Creating Data Visualizations with ggplot2
+
+
+- **What You Will Learn**
+  - How to create data visualizations using ggplot2 in a Shiny app
+  - Dynamic UI elements for variable selection
+
+---
+
+- **Required Packages**
+  - Load the necessary packages:
+    - `shiny`
+    - `bslib`
+    - `ggplot2`
+    - `dplyr`
+    - `haven`
+
+---
+
+- **Creating the User Interface**
+  - Define the user interface for your Shiny app.
+  - Features:
+    - A dropdown to select a variable to plot.
+    - A plot output to display the data visualization.
+
+---
+
+- **Dynamic UI Elements**
+  - Populate the dropdown with variable names from the uploaded data.
+  - Ensure dynamic interactivity by updating the dropdown choices.
+  
+```R
+observe({
+  choices &lt;- names(dm_data())
+  updateSelectInput(session, "dm_var", choices = choices)
+})
+```
+
+---
+
+- **Rendering ggplot2 Plot**
+  - Render the ggplot2 plot based on the selected variable.
+  - Detect the variable type (numeric or categorical) to create an appropriate plot.
+
+```R
+output$dm_plot &lt;- renderPlot({
+  req(dm_data(), input$dm_var)
+  var_type &lt;- class(dm_data()[[input$dm_var]])
+  if (var_type %in% c('integer', 'numeric')) {
+    ggplot(dm_data(), aes_string(x = input$dm_var)) +
+      geom_histogram(binwidth = 30) +
+      labs(paste("Distribution of", input$dm_var)) +
+      theme_minimal()
+  } else {
+    ggplot(dm_data(), aes_string(x = input$dm_var)) +
+      geom_bar() +
+      labs(paste("Frequency of", input$dm_var)) +
+      theme_minimal()
+  }
+})
+```
+
+---
+
+- **Summary**
+  - In Exercise 6, you've learned how to create dynamic data visualizations using ggplot2 in a Shiny app.
+  - You can now explore and visualize different variables from your data interactively.
+
+---
+
+#### Exercise 7: Adding Interactivity with Plotly
+
+
+
+- **What You Will Learn**
+  - How to enhance your ggplot2 data visualization by making it interactive using Plotly in a Shiny app.
+
+---
+
+- **Required Packages**
+  - Load the necessary packages:
+    - `shiny`
+    - `bslib`
+    - `ggplot2`
+    - `dplyr`
+    - `haven`
+    - `plotly` (New addition)
+
+---
+
+- **Creating the User Interface**
+  - Define the user interface for your Shiny app.
+  - Features:
+    - A dropdown to select a variable to plot.
+    - An interactive Plotly plot output.
+
+---
+
+- **Dynamic UI Elements**
+  - Populate the dropdown with variable names from the uploaded data.
+  - Ensure dynamic interactivity by updating the dropdown choices.
+  
+```R
+observe({
+  choices &lt;- names(dm_data())
+  updateSelectInput(session, "dm_var", choices = choices)
+})
+```
+
+---
+
+- **Rendering Interactive Plotly Plot**
+  - Render the ggplot2 plot based on the selected variable.
+  - Detect the variable type (numeric or categorical) to create an appropriate plot.
+  - Convert the ggplot2 plot to an interactive Plotly plot.
+  
+```R
+output$dm_plot &lt;- renderPlotly({
+  req(dm_data(), input$dm_var)
+  var_type &lt;- class(dm_data()[[input$dm_var]])
+  if (var_type %in% c('integer', 'numeric')) {
+    p &lt;- ggplot(dm_data(), aes_string(x = input$dm_var)) +
+      geom_histogram(binwidth = 30) +
+      labs(paste("Distribution of", input$dm_var)) +
+      theme_minimal()
+  } else {
+    p &lt;- ggplot(dm_data(), aes_string(x = input$dm_var)) +
+      geom_bar() +
+      labs(paste("Frequency of", input$dm_var)) +
+      theme_minimal()
+  }
+  
+  # Convert ggplot2 plot to Plotly
+  plotly_p &lt;- ggplotly(p)
+  
+  return(plotly_p)
+})
+```
+
+---
+
+- **Summary**
+  - In Exercise 7, you've learned how to add interactivity to your ggplot2 data visualization using Plotly in a Shiny app.
+  - Your plots are now interactive, allowing users to explore data in a more engaging way.
+
+---
+
+
+### Optional Exercise 8: Bringing It All Together
+
+- In this optional exercise, you have the opportunity to combine all the concepts you've learned in previous exercises to create a comprehensive Shiny app.
+
+### What to Expect
+
+- You'll integrate file upload functionality.
+- Create dynamic UI elements for variable selection.
+- Generate interactive plots using ggplot2 and Plotly.
+- Perform data manipulation and visualization.
+- This exercise is a chance to showcase your Shiny skills by building a fully interactive data exploration tool.
+
+---
+# Congratulations!
+
+## You've Completed the GMDS RShiny Workshop
+
+- We hope you've had an engaging and insightful journey into the world of Shiny web app development.
+- Let's recap what you've achieved and learned.
+
+
+## Workshop Recap
+
+- **Exercise 1**: Understanding the basic structure of a Shiny app.
+- **Exercise 2**: Building the user interface and implementing file input.
+- **Exercise 3**: Exploring reactive programming and data reading.
+- **Exercise 4**: Mastering data manipulation with dplyr.
+- **Exercise 5**: Creating dynamic UI elements.
+- **Exercise 6**: Visualizing data with ggplot2.
+- **Exercise 7**: Adding interactivity with Plotly.
+- **Exercise 8** (Optional): Bringing it all together.
+
+---
+
+## Your Accomplishments
+
+- You've created interactive web apps that can read and visualize data.
+- You've mastered dynamic UI elements, data manipulation, and interactivity.
+- You're now equipped to build your own Shiny apps for data analysis and presentation.
+
+---
+
+## Keep Exploring
+
+- Shiny offers limitless possibilities. Continue to explore and experiment.
+- Dive into more advanced topics like Shiny modules and deployment options.
+- Build real-world data-driven applications to solve complex problems.
+
+---
+
+## Thank You!
+
+- We want to express our gratitude for joining this workshop.
+- Your enthusiasm and dedication to learning are greatly appreciated.
+
+---
+
+
+## Questions &amp; Feedback
+
+- If you have any questions or feedback, please feel free to ask.
+- Your input is invaluable in improving future workshops.
+
+---
+
+# Thank You for Being Part of the GMDS RShiny Workshop!
+
+---
+
+
+# Resources
+
+- [Bootstrap Themes](https://bootswatch.com/)
+- [Shiny Cheat Sheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)
+- [Mastering Shiny Book](https://mastering-shiny.org/)
+- [Shiny Gallery for Inspiration](https://shiny.rstudio.com/gallery/)
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"background": "#FFFFFF",
+"text": "#333333"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
